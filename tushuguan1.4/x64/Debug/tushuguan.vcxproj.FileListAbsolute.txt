@@ -3,3 +3,4 @@ C:\Users\HW\Desktop\tushuguan1.1\x64\Debug\tushuguan.exe
 C:\Users\HW\Desktop\tushuguan1.2\x64\Debug\tushuguan.exe
 C:\Users\yawn\Desktop\tushuguan1.2\x64\Debug\tushuguan.exe
 C:\Users\yawn\Desktop\tushuguan1.3\x64\Debug\tushuguan.exe
+C:\Users\yawn\Desktop\tushuguan1.4\x64\Debug\tushuguan.exe

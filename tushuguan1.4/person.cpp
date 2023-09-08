@@ -4,25 +4,22 @@
 void person::mainmenu()
 {
     cout << "---------------------------------" << endl;
-    cout << "--------1.登录-------------------" << endl;
+    cout << "--------1.学生操作界面-----------" << endl;
     cout << "--------2.帮助-------------------" << endl;
     cout << "--------3.系统说明---------------" << endl;
     cout << "--------4.书库信息---------------" << endl;
     cout << "--------5.退出系统---------------" << endl;
-    cout << "--------6.注册-------------------" << endl;
-    cout << "--------7.管理员登录-------------" << endl;
+    cout << "--------6.管理员登录-------------" << endl;
     cout << "---------------------------------" << endl;
 }
 
-void person::denglumenu()
+void student::studentmenu()
 {
-    cout << "---------------------------------" << endl;
-    cout << "--------1.借书-------------------" << endl;
-    cout << "--------2.还书-------------------" << endl;
-    cout << "--------3.修改密码---------------" << endl;
-    cout << "--------4.退出-------------------" << endl;
-    cout << "---------------------------------" << endl;
-
+    cout << "-------------------------" << endl;
+    cout << "--------1.登录-----------" << endl;
+    cout << "--------2.注册-----------" << endl;
+    cout << "--------3.修改密码-------" << endl;
+    cout << "-------------------------" << endl;
 }
 
 
@@ -37,66 +34,112 @@ void manager::managermenu()
     cout << "--------------6.退出管理员系统---------------------" << endl;
     cout << "---------------------------------------------------" << endl;
 }
-person::person()//构造函数
-{}
-
-void student::denglu()
+void student::studentcz()
 {
-    int zhanghao, mima;
-    //输入账号
-    cout << "输入你的账号" << endl;
-    cin >> zhanghao;
-    //输入密码
-    cout << "输入你的密码" << endl;
-    cin >> mima;
-    m2.insert(pair<int, int>(zhanghao, mima));
-        if (m1!=m2)
-        {
-            cout << "用户账号密码错误" << endl;
-        }
-        else
-        {
-            this->denglumenu();
-            switch (getchar())
-            {
-            case '1':
-                break;
-            case '2':
-                break;
-            case '3':
-                this->change();
-                break;
-            case '4':
-                exit(0);
-                break;
-            default:
-                cout << "无法操作" << endl;
-                break;
-            }
-        }
+    cout << "---------------------------------------" << endl;
+    cout << "--------------1.借书-------------------" << endl;
+    cout << "--------------2.还书-------------------" << endl;
+    cout << "--------------3.查看书籍---------------" << endl;
+    cout << "--------------4.添加书籍---------------" << endl;
+    cout << "--------------5.退出全部系统-----------" << endl;
+    cout << "---------------------------------------" << endl;
 }
 
+person::person()//构造函数
+{
+
+}
+void student::studentcase()
+{
+    this->studentmenu();
+    switch (getchar())
+    {
+    case '1':
+        this->denglu();
+        break;
+    case '2':
+        this->zhuce();
+        break;
+    case '3':
+        this->change();
+        break;
+    default:
+        break;
+    }
+
+
+}
 
 void student::zhuce()
 {
+    string id;//学生注册账号
+    string key1;//学生注册输入密码一
+    string key2;//学生注册输入密码二
     //注册账号
     cout << "请输入你注册的账号" << endl;
-     cin >> id;
+    cin >> id;
     //注册密码
-     cout << "请输入你注册的密码" << endl;
-     cin >> key1;
-     cout << "再次确认你注册的密码" << endl;
-     cin >> key2;
-     if (key1 != key2)
-     {
-         cout << "两次密码不一致无法注册" << endl;
-         return;
-     }
-     else
-     {
-         m1.insert(pair<int, int>(id, key1));
-     }
-}    
+    cout << "请输入你注册的密码" << endl;
+    cin >> key1;
+    cout << "再次确认你注册的密码" << endl;
+    cin >> key2;
+    if (key1 != key2)
+    {
+        cout << "两次密码不一致无法注册" << endl;
+        return;
+    }
+    else
+    {
+        m1.insert(make_pair(id, key1));
+    }
+}
+
+
+void student::denglu()
+{
+    string zhanghao, mima;
+    //输入账号
+    cout << "输入你的账号" << endl;
+    cin >> zhanghao;
+    map<string, string>::iterator asd = m1.find(zhanghao);
+    //输入密码
+    cout << "输入你的密码" << endl;
+    cin >> mima;
+    if (asd != m1.end() && mima == asd->second)
+    {
+        this->studentcz();
+        cout << "选择你想要的操作" << endl;
+        int a;
+        cin >> a;
+        switch (a)
+        {
+        case 1://借书
+            break;
+        case 2://还书
+            break;
+        case 3://查看书籍
+            break;
+        case 4://添加书籍
+            this->newbook();
+            break;
+        case 5://退出系统
+            exit(0);
+            break;
+        default:
+            cout << "无法操作" << endl;
+            break;
+        }
+
+
+    }
+    else
+    {
+        cout << "账号或密码错误" << endl;
+    }
+}
+
+
+ 
 
 
 void manager::managerdenglu()
@@ -181,12 +224,13 @@ void manager::changebook()//管理员修改图书内容
     string changebookname,changebookneirong;
     cout << "请输入你想修改书籍的名称" << endl;
     cin >> changebookname;
-    map<string, string>::iterator pos = book.find(changebookname);
+    multimap<string, string>::iterator pos = book.find(changebookname);
     if (pos != book.end())
     {
-        cout << "请输入修改后的内容" << endl;
+        cout << "请输入修改后的内容" << endl ;
         cin >> changebookneirong;
-        book.insert(make_pair(changebookname, changebookneirong));
+        pos->second = changebookneirong;
+        cout << "书名" << (*pos).first <<"内容" << (*pos).second << endl;
     }
     else
     {
@@ -198,15 +242,15 @@ void manager::changebook()//管理员修改图书内容
 
 void student::change()//学生修改密码
 {
-    int zhanghao, mima;
+    string zhanghao2, mima2;
     cout << "请输入你的账号" << endl;
-    cin >> zhanghao;
-    map<int, int>::iterator it = m1.find(zhanghao);
+    cin >> zhanghao2;
+    map<string, string>::iterator it = m1.find(zhanghao2);
     if (it != m1.end())
     {
         cout << "请输入你想要修改的密码" << endl;
-        cin >> mima;
-        m1.insert(make_pair(zhanghao, mima));
+        cin >> mima2;
+        it->second = mima2;
     }
     else
     {
