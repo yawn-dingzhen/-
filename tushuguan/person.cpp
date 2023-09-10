@@ -53,15 +53,17 @@ person::person()//构造函数
 void student::studentcase()
 {
     this->studentmenu();
-    switch (getchar())
+    int a;
+    cin >> a;
+    switch (a)
     {
-    case '1':
+    case 1:
         this->denglu();
         break;
-    case '2':
+    case 2:
         this->zhuce();
         break;
-    case '3':
+    case 3:
         this->change();
         break;
     default:
@@ -169,25 +171,27 @@ void manager::managerdenglu()
     {
         this->managermenu();
         //下面编号对应菜单数字编号
-        switch (getchar())
+        int a;
+        cin >> a;
+        switch (a)
         {
-        case '1':
+        case 1:
             break;
-        case '2':
+        case 2:
             break;
-        case '3'://新书入库
+        case 3://新书入库
             this->newbook();
             break;
-        case '4'://删除书籍
+        case 4://删除书籍
             this->delbook();
             break;
-        case '5'://修改书籍
+        case 5://修改书籍
             this->changebook();
             break;
-        case '6'://查询书籍
+        case 6://查询书籍
             this->mlookbook();
             break;
-        case'7':
+        case 7:
             return;
             break;
         default:

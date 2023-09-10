@@ -20,8 +20,8 @@ class student :public person
 {
 public:
     void studentmenu();//学生菜单
-    void studentcz();
-    void studentcase();
+    void studentcz();//学生操作菜单
+    void studentcase();//学生操作
     void denglu();//登录
     void bring();//学生借书
     void back();//学生还书
