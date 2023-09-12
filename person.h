@@ -11,8 +11,7 @@ public:
     person();//构造函数用于初始化         
     void mainmenu();//菜单              
     void newbook();//新书入库
-    string bookname;
-    string neirong;
+    void choice();
 };
 
 
@@ -28,6 +27,9 @@ public:
     void change();//学生修改密码
     void zhuce();//学生注册
     void slookbook();//查看书籍
+    string password;
+    string xuehao;
+    string zhanghao;
 };
 
 
@@ -44,3 +46,9 @@ public:
 
 };
 
+class book
+{
+public:
+    string b_neirong;
+    string b_type;
+};
