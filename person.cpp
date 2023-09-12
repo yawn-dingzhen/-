@@ -151,7 +151,7 @@ void student::denglu()
             this->newbook();
             break;
         case 5://退出系统
-            exit(0);
+            return;
             break;
         default:
             cout << "无法操作" << endl;

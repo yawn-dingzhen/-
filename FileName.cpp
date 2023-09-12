@@ -4,21 +4,30 @@ using namespace std;
 
 int main()
 {
-    person person1;
-    student student1;
-    manager manager1;
     bool bExit = false;
-    person1.mainmenu();
+    cout << "---------------------------------" << endl;
+    cout << "-----欢迎使用图书管理系统-------" << endl;
+    cout << "---------------------------------" << endl;
+    cout << "---------------------------------" << endl;
+    cout << "*******请选择你需要的操作********" << endl;
+    cout << "---------------------------------" << endl;
+    cout << "---------------------------------" << endl;
+    cout << "-----1.学生操作------------------" << endl;
+    cout << "-----2.管理员操作----------------" << endl;
+    cout << "-----3.退出管理系统--------------" << endl;
+    cout << "---------------------------------" << endl;
     while (!bExit)
     {
+        student operate1;
+        manager operate2;
         switch (getchar())
         {
             //下面编号对应菜单数字编号
         case '1':
-            student1.studentcase();
+            operate1.studentcase();
             break;
         case '2':
-            manager1.managerdenglu();
+            operate2.managerdenglu();
             break;
         case '3':
             exit(0);
