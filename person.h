@@ -9,8 +9,7 @@ class person
 {
 public:
     person();//构造函数用于初始化         
-    void newbook();//新书入库
-    void choice();
+    void newbook();//新书入库;
 };
 
 
@@ -20,8 +19,8 @@ public:
     void studentcz();//学生操作菜单
     void studentcase();//学生操作
     void denglu();//登录
-    void bring();//学生借书
-    void back();//学生还书
+    void bringbook();//学生借书
+    void backbook();//学生还书
     void change();//学生修改密码
     void zhuce();//学生注册
     void slookbook();//查看书籍

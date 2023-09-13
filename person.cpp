@@ -1,12 +1,12 @@
 #include "person.h"
 #include "masage.h"
 bookmanager manager1;
+bookmanager manager2;
 personmanager personmanagr1;
 manager manager2;
 student student1;
 book b;
-
-
+book b2;
 
 
 void manager::managermenu()
@@ -74,16 +74,34 @@ void student::zhuce()
     string id;//学生注册账号
     string key1;//学生注册输入密码一
     string key2;//学生注册输入密码二
-    //注册账号
     string name1;
     string xuehao1;
     cout << "请先登录您的个人信息" << endl;
+    cout << "--------------------" << endl;
+    cout << "--------------------" << endl;
+    cout << "--------------------" << endl;
+    cout << "--------------------" << endl;
     cout << "请输入您的姓名" << endl;
     cin >> name1;
-    cout << "请输入你的学号" << endl;
+    if (name1.size()<1 && name1.size()>9)
+    {
+        cout << "请输入正确姓名格式" << endl;
+        return;
+    }
+    cout << "请输入你的十一位学号" << endl;
     cin >> xuehao1;
-    cout << "请输入你注册的账号" << endl;
+    if (xuehao1.size() != 11)
+    {
+        cout << "输入的学号格式有误" << endl;
+        return;
+    }
+    cout << "请输入你注册的十位数账号" << endl;
     cin >> id;
+    if (id.size() != 10)
+    {
+        cout << "输入的账号格式有误" << endl;
+        return;
+    }
     cout << "请输入你注册的密码" << endl;
     cin >> key1;
     cout << "再次确认你注册的密码" << endl;
@@ -130,6 +148,7 @@ void student::denglu()
         switch (a)
         {
         case 1://借书
+            this->bringbook();
             break;
         case 2://还书
             break;
@@ -177,7 +196,6 @@ void manager::managerdenglu()
         cout << "管理员账号密码错误" << endl;
         return;
     }
-    system("cls");
     //管理员登录成功
     while (win == 1)
     {   
@@ -196,10 +214,10 @@ void manager::managerdenglu()
         switch (a)
         {
             system("cls");
-        case 1:
+        case 1://查看全部读者信息
             this->lookallreader();
             break;
-        case 2:
+        case 2://删除读者信息
             this->delreader();
             break;
         case 3://新书入库
@@ -214,7 +232,7 @@ void manager::managerdenglu()
         case 6://查询书籍
             this->mlookbook();
             break;
-        case 7:
+        case 7://返回
             return;
             break;
         default:
@@ -234,7 +252,6 @@ void person::newbook()//添加书籍
     cin >> leixing;
     cout << "请输入图书内容" << endl;
     cin >> neirong;
-
     b.b_neirong = neirong;
     b.b_type = leixing;
     manager1.allbook.insert(make_pair(bookname, b));
@@ -260,7 +277,7 @@ void manager::delbook()//管理员删除书籍
 
 void manager::changebook()//管理员修改图书内容
 {
-    string changebookname,changebookneirong;
+    string changebookname,changebookneirong,type2;
     cout << "请输入你想修改书籍的名称" << endl;
     cin >> changebookname;
     map<string, book>::iterator pos = manager1.allbook.find(changebookname);
@@ -269,7 +286,10 @@ void manager::changebook()//管理员修改图书内容
         cout << "请输入修改后的内容" << endl ;
         cin >> changebookneirong;
         pos->second.b_neirong = changebookneirong;
-        cout << "书名:" << (*pos).first <<"内容:" << (*pos).second.b_neirong << endl;
+        cout << "请输入修改后的类型" << endl;
+
+        pos->second.b_type = type2;
+        cout << "书名:" << pos->first <<"类型："<<(*pos).second.b_type << "内容:" << (*pos).second.b_neirong << endl;
     }
     else
     {
@@ -281,11 +301,13 @@ void manager::changebook()//管理员修改图书内容
 
 void student::change()//学生修改密码
 {
-    string zhanghao2, mima2;
+    string zhanghao2, mima2,mima1;
     cout << "请输入你的账号" << endl;
     cin >> zhanghao2;
+    cout << "请输入你当前使用的密码" << endl;
+    cin >> mima1;
     map<string, student>::iterator it = personmanagr1.studentsmasage.find(zhanghao2);
-    if (it != personmanagr1.studentsmasage.end())
+    if (it != personmanagr1.studentsmasage.end()&&it->second.password==mima1)
     {
         cout << "请输入你想要修改的密码" << endl;
         cin >> mima2;
@@ -293,7 +315,7 @@ void student::change()//学生修改密码
     }
     else
     {
-        cout << "法查询该账号信息请注册或注意输入账号是否正确" << endl;
+        cout << "法查询该账号信息请注册或注意输入账号密码是否正确" << endl;
     }
  }
 
@@ -342,21 +364,21 @@ void student::slookbook()//学生查看书籍
 }
 
 
-void manager::lookallreader()
+void manager::lookallreader()//查看所有学生
 {
     for (map<string, student>::iterator it = personmanagr1.studentsmasage.begin(); it != personmanagr1.studentsmasage.end(); it++)
     {
-        string n = it->first;
-        string x = it->second.xuehao;
-        string y = it->second.password;
-        string z = it->second.zhanghao;
-        cout << "学生的姓名为：" << n << " " << "学生的学号为：" << x << " " << "学生的账号是：" << z << " " << "学生的密码是；" << y;
+            string n = it->first;
+            string x = it->second.xuehao;
+            string y = it->second.password;
+            string z = it->second.zhanghao;
+            cout << "学生的姓名为：" << n << " " << "学生的学号为：" << x << " " << "学生的账号是：" << z << " " << "学生的密码是；" << y;
     }
     cout << endl;
 }
 
 
-void manager::delreader()
+void manager::delreader()//删除学生信息
 {
     cout << "请输入你要删除学生信息的姓名" << endl;
     string name;
@@ -371,4 +393,36 @@ void manager::delreader()
         personmanagr1.studentsmasage.erase(name);
         cout << "删除成功" << endl;
     }
+}
+
+void student::bringbook()//借书
+{
+    string name;
+    cout << "请输入你想要借书的名称" << endl;
+    map<string, book>::iterator pos = manager1.allbook.find(name);
+    if (pos != manager1.allbook.end())
+    {
+        cout << "书籍名称：" << pos->first << " " << "书籍类型；" << pos->second.b_type << " " << "书籍内容：" << pos->second.b_neirong << endl;
+        //把借走的书籍放入借书容器
+        manager2.bringallbook.insert(make_pair(name, b2));
+        b2.b_neirong = pos->second.b_neirong;
+        b2.b_type = pos->second.b_type;
+        //借完书将书从书库中删除
+        manager1.allbook.erase(name);
+    }
+    else
+    {
+        cout << "书库中没有该图书" << endl;
+    }
+}
+
+void student::backbook()//还书
+{
+    string name;
+    cout << "请输入你要还书的名称" << endl;
+    cin >> name;
+    map<string, book>::iterator pos = manager2.bringallbook.find(name);
+    manager1.allbook.insert(make_pair(name, b));
+    b.b_neirong=pos->second.b_neirong;
+    b.b_type = pos->second.b_type;
 }

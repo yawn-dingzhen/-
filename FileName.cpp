@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-
+    
     bool bExit = false;
     while (!bExit)
     {
@@ -37,6 +37,7 @@ int main()
             bExit = true;
             break;
         default://用户输入其他指令
+            cout << "输入了无效指令" << endl;
             break;
         }
     }
