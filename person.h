@@ -9,7 +9,6 @@ class person
 {
 public:
     person();//构造函数用于初始化         
-    void mainmenu();//菜单              
     void newbook();//新书入库
     void choice();
 };
@@ -18,7 +17,6 @@ public:
 class student :public person
 {
 public:
-    void studentmenu();//学生菜单
     void studentcz();//学生操作菜单
     void studentcase();//学生操作
     void denglu();//登录

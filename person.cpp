@@ -7,30 +7,6 @@ student student1;
 book b;
 
 
-void person::mainmenu()
-{
-    cout << "---------------------------------" << endl;
-    cout << "-----欢迎使用图书管理系统-------" << endl;
-    cout << "---------------------------------" << endl;
-    cout << "---------------------------------" << endl;
-    cout << "*******请选择你需要的操作********" << endl;
-    cout << "---------------------------------" << endl;
-    cout << "---------------------------------" << endl;
-    cout << "-----1.学生操作------------------" << endl;
-    cout << "-----2.管理员操作----------------" << endl;
-    cout << "-----3.退出管理系统--------------" << endl;
-    cout << "---------------------------------" << endl;
-}
-
-
-void student::studentmenu()
-{
-    cout << "-------------------------" << endl;
-    cout << "--------1.登录-----------" << endl;
-    cout << "--------2.注册-----------" << endl;
-    cout << "--------3.修改密码-------" << endl;
-    cout << "-------------------------" << endl;
-}
 
 
 void manager::managermenu()
@@ -65,7 +41,12 @@ person::person()//构造函数
 }
 void student::studentcase()
 {
-    this->studentmenu();
+    system("cls");
+    cout << "-------------------------" << endl;
+    cout << "--------1.登录-----------" << endl;
+    cout << "--------2.注册-----------" << endl;
+    cout << "--------3.修改密码-------" << endl;
+    cout << "-------------------------" << endl;
     int a;
     cin >> a;
     switch (a)
@@ -89,6 +70,7 @@ void student::studentcase()
 
 void student::zhuce()
 {
+    system("cls");
     string id;//学生注册账号
     string key1;//学生注册输入密码一
     string key2;//学生注册输入密码二
@@ -100,14 +82,10 @@ void student::zhuce()
     cin >> name1;
     cout << "请输入你的学号" << endl;
     cin >> xuehao1;
-    student1.xuehao = xuehao1;
     cout << "请输入你注册的账号" << endl;
     cin >> id;
-    student1.zhanghao = id;
-    //注册密码
     cout << "请输入你注册的密码" << endl;
     cin >> key1;
-    student1.password = key1;
     cout << "再次确认你注册的密码" << endl;
     cin >> key2;
     if (key1 != key2)
@@ -117,6 +95,9 @@ void student::zhuce()
     }
     else
     {
+        student1.zhanghao = id;
+        student1.xuehao = xuehao1;
+        student1.password = key1;
         personmanagr1.studentsmasage.insert(make_pair(name1, student1));
     }
 }
@@ -124,6 +105,7 @@ void student::zhuce()
 
 void student::denglu()
 {
+    system("cls");
     string zhanghao, mima;
     //输入账号
     cout << "输入你的账号" << endl;
@@ -134,7 +116,14 @@ void student::denglu()
     cin >> mima;
     if (asd != personmanagr1.studentsmasage.end() && mima == asd->second.password)
     {
-        this->studentcz();
+        system("cls");
+        cout << "---------------------------------------" << endl;
+        cout << "--------------1.借书-------------------" << endl;
+        cout << "--------------2.还书-------------------" << endl;
+        cout << "--------------3.查看添加书籍-----------" << endl;
+        cout << "--------------4.添加书籍---------------" << endl;
+        cout << "--------------5.退出学生系统-----------" << endl;
+        cout << "---------------------------------------" << endl;
         cout << "选择你想要的操作" << endl;
         int a;
         cin >> a;
@@ -150,7 +139,7 @@ void student::denglu()
         case 4://添加书籍
             this->newbook();
             break;
-        case 5://退出系统
+        case 5://退出系统;
             return;
             break;
         default:
@@ -169,6 +158,7 @@ void student::denglu()
 
 void manager::managerdenglu()
 {
+    system("cls");
     //登录成功判断函数
     person lkb;
     int zhanghao1, mima1, win;
@@ -187,15 +177,25 @@ void manager::managerdenglu()
         cout << "管理员账号密码错误" << endl;
         return;
     }
+    system("cls");
     //管理员登录成功
     while (win == 1)
-    {
-        this->managermenu();
+    {   
+        cout << "---------------------------------------------------" << endl;
+        cout << "--------------1.查看所有读者信息-------------------" << endl;
+        cout << "--------------2.清空读者信息-----------------------" << endl;
+        cout << "--------------3.新书入库---------------------------" << endl;
+        cout << "--------------4.删除书籍---------------------------" << endl;
+        cout << "--------------5.修改书籍---------------------------" << endl;
+        cout << "--------------6.查看添加图书内容-------------------" << endl;
+        cout << "--------------7.退出管理员系统---------------------" << endl;
+        cout << "---------------------------------------------------" << endl;
         //下面编号对应菜单数字编号
         int a;
         cin >> a;
         switch (a)
         {
+            system("cls");
         case 1:
             this->lookallreader();
             break;
@@ -215,6 +215,7 @@ void manager::managerdenglu()
             this->mlookbook();
             break;
         case 7:
+            return;
             break;
         default:
             cout << "无法操作" << endl;
