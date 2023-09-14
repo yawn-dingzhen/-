@@ -1,7 +1,7 @@
 #include "person.h"
 #include "masage.h"
-bookmanager manager1;
-bookmanager manager2;
+bookmanager bookmanager1;
+bookmanager bookmanager2;
 personmanager personmanagr1;
 manager manager2;
 student student1;
@@ -104,6 +104,11 @@ void student::zhuce()
     }
     cout << "请输入你注册的密码" << endl;
     cin >> key1;
+    if (key1.size()<6)
+    {
+        cout << "输入的密码格式有误" << endl;
+        return;
+    }
     cout << "再次确认你注册的密码" << endl;
     cin >> key2;
     if (key1 != key2)
@@ -128,7 +133,7 @@ void student::denglu()
     //输入账号
     cout << "输入你的账号" << endl;
     cin >> zhanghao;
-    map<string, student>::iterator asd = personmanagr1.studentsmasage.find(zhanghao);
+    multimap<string, student>::iterator asd = personmanagr1.studentsmasage.find(zhanghao);
     //输入密码
     cout << "输入你的密码" << endl;
     cin >> mima;
@@ -151,6 +156,7 @@ void student::denglu()
             this->bringbook();
             break;
         case 2://还书
+            this->backbook();
             break;
         case 3://查看书籍
             this->slookbook();
@@ -254,7 +260,7 @@ void person::newbook()//添加书籍
     cin >> neirong;
     b.b_neirong = neirong;
     b.b_type = leixing;
-    manager1.allbook.insert(make_pair(bookname, b));
+    bookmanager1.allbook.insert(make_pair(bookname, b));
 }
 
 
@@ -263,10 +269,10 @@ void manager::delbook()//管理员删除书籍
     string name;
     cout << "请输入你想删除书籍的名称" << endl;
     cin >> name;
-    map<string, book>::iterator qwe = manager1.allbook.find(name);
-        if (qwe != manager1.allbook.end())
+    map<string, book>::iterator qwe = bookmanager1.allbook.find(name);
+        if (qwe != bookmanager1.allbook.end())
         {
-            manager1.allbook.erase(name);
+            bookmanager1.allbook.erase(name);
         }
         else
         {
@@ -280,14 +286,14 @@ void manager::changebook()//管理员修改图书内容
     string changebookname,changebookneirong,type2;
     cout << "请输入你想修改书籍的名称" << endl;
     cin >> changebookname;
-    map<string, book>::iterator pos = manager1.allbook.find(changebookname);
-    if (pos != manager1.allbook.end())
+    map<string, book>::iterator pos = bookmanager1.allbook.find(changebookname);
+    if (pos != bookmanager1.allbook.end())
     {
         cout << "请输入修改后的内容" << endl ;
         cin >> changebookneirong;
         pos->second.b_neirong = changebookneirong;
         cout << "请输入修改后的类型" << endl;
-
+        cin >> type2;
         pos->second.b_type = type2;
         cout << "书名:" << pos->first <<"类型："<<(*pos).second.b_type << "内容:" << (*pos).second.b_neirong << endl;
     }
@@ -306,7 +312,7 @@ void student::change()//学生修改密码
     cin >> zhanghao2;
     cout << "请输入你当前使用的密码" << endl;
     cin >> mima1;
-    map<string, student>::iterator it = personmanagr1.studentsmasage.find(zhanghao2);
+    multimap<string, student>::iterator it = personmanagr1.studentsmasage.find(zhanghao2);
     if (it != personmanagr1.studentsmasage.end()&&it->second.password==mima1)
     {
         cout << "请输入你想要修改的密码" << endl;
@@ -325,8 +331,8 @@ void manager::mlookbook()//管理查看书籍
     string bookname;
     cout << "请输入你想查询书籍的名称" << endl;
     cin >> bookname;
-    map<string, book>::iterator look = manager1.allbook.find(bookname);
-    if (look != manager1.allbook.end())
+    map<string, book>::iterator look = bookmanager1.allbook.find(bookname);
+    if (look != bookmanager1.allbook.end())
     {
         cout << "书籍名称：" << endl;
         cout << look->first << endl;
@@ -347,8 +353,8 @@ void student::slookbook()//学生查看书籍
     string bookname;
     cout << "请输入你想查询书籍的名称" << endl;
     cin >> bookname;
-    map<string,book>::iterator look = manager1.allbook.find(bookname);
-    if (look != manager1.allbook.end())
+    map<string,book>::iterator look = bookmanager1.allbook.find(bookname);
+    if (look != bookmanager1.allbook.end())
     {
         cout << "书籍名称：" << endl;
         cout << look->first << endl;
@@ -366,7 +372,7 @@ void student::slookbook()//学生查看书籍
 
 void manager::lookallreader()//查看所有学生
 {
-    for (map<string, student>::iterator it = personmanagr1.studentsmasage.begin(); it != personmanagr1.studentsmasage.end(); it++)
+    for (multimap<string, student>::iterator it = personmanagr1.studentsmasage.begin(); it != personmanagr1.studentsmasage.end(); it++)
     {
             string n = it->first;
             string x = it->second.xuehao;
@@ -383,15 +389,18 @@ void manager::delreader()//删除学生信息
     cout << "请输入你要删除学生信息的姓名" << endl;
     string name;
     cin>>name;
-    map<string, student>::iterator pos = personmanagr1.studentsmasage.find(name);
-    if (personmanagr1.studentsmasage.find(name) == personmanagr1.studentsmasage.end())
-    {
-        cout << "没有该学生无法删除" << endl;
-    }
-    else
+    cout << "请输入学生的学号" << endl;
+    string xuehao1;
+    cin >> xuehao1;
+   multimap<string, student>::iterator pos = personmanagr1.studentsmasage.find(name);
+    if (personmanagr1.studentsmasage.find(name) != personmanagr1.studentsmasage.end()&&pos->second.xuehao==xuehao1)
     {
         personmanagr1.studentsmasage.erase(name);
         cout << "删除成功" << endl;
+    }
+    else
+    {
+        cout << "没有该学生无法删除" << endl;
     }
 }
 
@@ -399,16 +408,16 @@ void student::bringbook()//借书
 {
     string name;
     cout << "请输入你想要借书的名称" << endl;
-    map<string, book>::iterator pos = manager1.allbook.find(name);
-    if (pos != manager1.allbook.end())
+    map<string, book>::iterator pos = bookmanager1.allbook.find(name);
+    if (pos != bookmanager1.allbook.end())
     {
         cout << "书籍名称：" << pos->first << " " << "书籍类型；" << pos->second.b_type << " " << "书籍内容：" << pos->second.b_neirong << endl;
         //把借走的书籍放入借书容器
-        manager2.bringallbook.insert(make_pair(name, b2));
         b2.b_neirong = pos->second.b_neirong;
         b2.b_type = pos->second.b_type;
+        bookmanager2.bringallbook.insert(make_pair(name, b2));
         //借完书将书从书库中删除
-        manager1.allbook.erase(name);
+        bookmanager1.allbook.erase(name);
     }
     else
     {
@@ -416,13 +425,15 @@ void student::bringbook()//借书
     }
 }
 
+
 void student::backbook()//还书
 {
     string name;
     cout << "请输入你要还书的名称" << endl;
     cin >> name;
-    map<string, book>::iterator pos = manager2.bringallbook.find(name);
-    manager1.allbook.insert(make_pair(name, b));
-    b.b_neirong=pos->second.b_neirong;
+    map<string, book>::iterator pos = bookmanager2.bringallbook.find(name);
+    b.b_neirong = pos->second.b_neirong;
     b.b_type = pos->second.b_type;
+    bookmanager1.allbook.insert(make_pair(name, b));
 }
+
