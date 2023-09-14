@@ -16,12 +16,8 @@ public:
 class student :public person
 {
 public:
-    void studentcase();//学生操作
-    void denglu();//登录
     void bringbook();//学生借书
     void backbook();//学生还书
-    void change();//学生修改密码
-    void zhuce();//学生注册
     void slookbook();//查看书籍
     string password;
     string xuehao;
@@ -46,4 +42,14 @@ class book
 public:
     string b_neirong;
     string b_type;
+};
+
+
+class studentmanage
+{
+public:
+    void studentcase();//学生操作
+    void denglu();//登录
+    void change();//学生修改密码
+    void zhuce();//学生注册
 };

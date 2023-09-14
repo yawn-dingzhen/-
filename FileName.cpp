@@ -19,13 +19,13 @@ int main()
         cout << "-----2.管理员操作----------------" << endl;
         cout << "-----3.退出管理系统--------------" << endl;
         cout << "---------------------------------" << endl;
-        student* a =new student();
+        studentmanage* a =new studentmanage();
         manager* b = new manager();
         switch (getchar())
         {
             //下面编号对应菜单数字编号
         case '1':           
-            a->studentcase();
+           a->studentcase();
             break;
         case '2':
             b->managerdenglu();

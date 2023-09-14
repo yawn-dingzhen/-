@@ -13,7 +13,7 @@ person::person()//构造函数
 {
 
 }
-void student::studentcase()
+void studentmanage::studentcase()
 {
     system("cls");
     cout << "-------------------------" << endl;
@@ -42,7 +42,7 @@ void student::studentcase()
 }
 
 
-void student::zhuce()
+void studentmanage::zhuce()
 {
     system("cls");
     string id;//学生注册账号
@@ -100,7 +100,7 @@ void student::zhuce()
 }
 
 
-void student::denglu()
+void studentmanage::denglu()
 {
     system("cls");
     string zhanghao, mima,name;
@@ -129,16 +129,16 @@ void student::denglu()
         switch (a)
         {
         case 1://借书
-            this->bringbook();
+            student1.bringbook();
             break;
         case 2://还书
-            this->backbook();
+            student1.backbook();
             break;
         case 3://查看书籍
-            this->slookbook();
+            student1.slookbook();
             break;
         case 4://添加书籍
-            this->newbook();
+            student1.newbook();
             break;
         case 5://退出系统;
             return;
@@ -281,7 +281,7 @@ void manager::changebook()//管理员修改图书内容
 }
 
 
-void student::change()//学生修改密码
+void studentmanage::change()//学生修改密码
 {
     string zhanghao2, mima2,mima1,name;
     cout << "请输入你的姓名" << endl;
@@ -386,6 +386,7 @@ void student::bringbook()//借书
 {
     string name;
     cout << "请输入你想要借书的名称" << endl;
+    cin >> name;
     map<string, book>::iterator pos = bookmanager1.allbook.find(name);
     if (pos != bookmanager1.allbook.end())
     {
