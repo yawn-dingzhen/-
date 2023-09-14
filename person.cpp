@@ -9,32 +9,6 @@ book b;
 book b2;
 
 
-void manager::managermenu()
-{
-    cout << "---------------------------------------------------" << endl;
-    cout << "--------------1.查看所有读者信息-------------------" << endl;
-    cout << "--------------2.清空读者信息-----------------------" << endl;
-    cout << "--------------3.新书入库---------------------------" << endl;
-    cout << "--------------4.删除书籍---------------------------" << endl;
-    cout << "--------------5.修改书籍---------------------------" << endl;
-    cout << "--------------6.查看添加图书内容-------------------" << endl;
-    cout << "--------------7.退出管理员系统---------------------" << endl;
-    cout << "---------------------------------------------------" << endl;
-}
-
-
-void student::studentcz()
-{
-    cout << "---------------------------------------" << endl;
-    cout << "--------------1.借书-------------------" << endl;
-    cout << "--------------2.还书-------------------" << endl;
-    cout << "--------------3.查看添加书籍-----------" << endl;
-    cout << "--------------4.添加书籍---------------" << endl;
-    cout << "--------------5.退出全部系统-----------" << endl;
-    cout << "---------------------------------------" << endl;
-}
-
-
 person::person()//构造函数
 {
 
@@ -129,15 +103,17 @@ void student::zhuce()
 void student::denglu()
 {
     system("cls");
-    string zhanghao, mima;
+    string zhanghao, mima,name;
     //输入账号
+    cout << "请输入你的姓名" << endl;
+    cin >> name;
+    map<string, student>::iterator asd = personmanagr1.studentsmasage.find(name);
+    //输入密码
     cout << "输入你的账号" << endl;
     cin >> zhanghao;
-    multimap<string, student>::iterator asd = personmanagr1.studentsmasage.find(zhanghao);
-    //输入密码
     cout << "输入你的密码" << endl;
     cin >> mima;
-    if (asd != personmanagr1.studentsmasage.end() && mima == asd->second.password)
+    if (asd != personmanagr1.studentsmasage.end() && mima == asd->second.password&&zhanghao==asd->second.zhanghao)
     {
         system("cls");
         cout << "---------------------------------------" << endl;
@@ -307,13 +283,15 @@ void manager::changebook()//管理员修改图书内容
 
 void student::change()//学生修改密码
 {
-    string zhanghao2, mima2,mima1;
+    string zhanghao2, mima2,mima1,name;
+    cout << "请输入你的姓名" << endl;
+    cin >> name;
     cout << "请输入你的账号" << endl;
     cin >> zhanghao2;
     cout << "请输入你当前使用的密码" << endl;
     cin >> mima1;
-    multimap<string, student>::iterator it = personmanagr1.studentsmasage.find(zhanghao2);
-    if (it != personmanagr1.studentsmasage.end()&&it->second.password==mima1)
+    map<string, student>::iterator it = personmanagr1.studentsmasage.find(name);
+    if (it != personmanagr1.studentsmasage.end()&&it->second.password==mima1&&it->second.zhanghao==zhanghao2)
     {
         cout << "请输入你想要修改的密码" << endl;
         cin >> mima2;
@@ -372,7 +350,7 @@ void student::slookbook()//学生查看书籍
 
 void manager::lookallreader()//查看所有学生
 {
-    for (multimap<string, student>::iterator it = personmanagr1.studentsmasage.begin(); it != personmanagr1.studentsmasage.end(); it++)
+    for (map<string, student>::iterator it = personmanagr1.studentsmasage.begin(); it != personmanagr1.studentsmasage.end(); it++)
     {
             string n = it->first;
             string x = it->second.xuehao;
@@ -392,7 +370,7 @@ void manager::delreader()//删除学生信息
     cout << "请输入学生的学号" << endl;
     string xuehao1;
     cin >> xuehao1;
-   multimap<string, student>::iterator pos = personmanagr1.studentsmasage.find(name);
+   map<string, student>::iterator pos = personmanagr1.studentsmasage.find(name);
     if (personmanagr1.studentsmasage.find(name) != personmanagr1.studentsmasage.end()&&pos->second.xuehao==xuehao1)
     {
         personmanagr1.studentsmasage.erase(name);

@@ -16,5 +16,5 @@ public:
 class personmanager
 {
 public:
-    multimap<string,student> studentsmasage;//学生信息
+    map<string,student> studentsmasage;//学生信息
 };
